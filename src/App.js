@@ -4,7 +4,7 @@ import './App.css';
 
 class App extends Component {
     state = {
-        items: null
+        items: []
     }
 
     componentDidMount() {
@@ -17,10 +17,8 @@ class App extends Component {
             })
     }
 
-
-
     render() {
-        const { items } = this.state
+        const { items } = this.state;
 
         return (
             <div className="App">
