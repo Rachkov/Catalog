@@ -1,63 +1,24 @@
 import React, { Component } from 'react';
-import { Button, Grid, Row, Col } from 'react-bootstrap';
+import {Computer} from "./Computer";
 
 class Computers extends Component {
-    render () {
+    renderTemp () {
         const { data } = this.props;
-        
-        const temp = data.map(function (item, index) {
-            const manufacturer = item.find((n) => n.name === 'Manufacturer').value;
-            const model = item.find((n) => n.name === 'Model').value;
-            const diagonal = item.find((n) => n.name === 'Diagonal').value;
-            const scrRes = item.find((n) => n.name === 'Screen Resolution').value;
-            const CPU = item.find((n) => n.name === 'CPU').value;
-            const modelCPU = item.find((n) => n.name === 'Model CPU').value;
-            const RAM = item.find((n) => n.name === 'RAM').value;
-            const typeHD = item.find((n) => n.name === 'Type HD').value;
-            const sizeHD = item.find((n) => n.name === 'Size HD').value;
-            const graphicsCard = item.find((n) => n.name === 'Graphics Card').value;
-            let color = item.find((n) => n.name === 'Color').value;
-            let os = item.find((n) => n.name === 'os').value || 'Операционная система неизвестна';
-            const img = item.find((n) => n.name === 'img0').value;
-            const price = item.find((n) => n.name === 'price').value;
-            if (color === 'black') {
-                color = 'цвет корпуса черный'
-            } else if (color === 'green') {
-                color = 'цвет корпуса зеленый'
-            } else if (color === 'gold') {
-                color = 'цвет корпуса золотистый'
-            } else if (color === 'silver') {
-                color = 'цвет корпуса серебристый'
-            } else if (color === 'dark silver') {
-                color = 'цвет корпуса серый'
-            }
-            return (
-                <div key={index}>
-                    <Grid>
-                        <Row>
-                            <Col md={3}>
-                                <img alt="" src={img}/>
-                            </Col>
-                            <Col md={5}>
-                                <h4>{manufacturer} {model}</h4>
-                                <p>{diagonal}" {scrRes}, {CPU} {modelCPU}, {RAM}ГБ, {typeHD} {sizeHD}ГБ, {graphicsCard}, {os}, {color}</p>
-                            </Col>
-                            <Col md={2}>
-                                <h4>{price}</h4>
-                            </Col>
-                            <Col md={2}>
-                                <Button>В корзину</Button>
-                            </Col>
-                        </Row>
-                    </Grid>
+        let temp = null;
 
-                </div>
-            )
-        });
+        if(data.length) {
+            temp = data.map(function (item, index) {
+                return <Computer key={index} data={item}/>
+            })
+        }
 
+        return temp
+    }
+
+    render () {
         return (
             <div>
-                {temp}
+                {this.renderTemp()}
             </div>
         )
     }
