@@ -1,6 +1,6 @@
-.showMore {
+.showMore, .search {
     text-align: center;
 }
-.none {
-    display: none;
+.form-inline .form-control {
+    width: 500px;
 }

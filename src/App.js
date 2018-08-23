@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Computers } from "./components/Computers"
+import { Search } from "./components/Search"
 import './App.css';
 
 class App extends Component {
@@ -22,6 +23,7 @@ class App extends Component {
 
         return (
             <div className="App">
+
                 <Computers data={items}/>
             </div>
         );

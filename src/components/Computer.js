@@ -51,7 +51,6 @@ class Computer extends Component {
                         </Col>
                     </Row>
                 </Grid>
-
             </div>
         )
     }
