@@ -6,7 +6,7 @@ class Search extends Component {
         return (
             <Form inline className="search">
                 <FormGroup>
-                    <FormControl type="text" placeholder="Seaaaaarch" />
+                    <FormControl type="text" placeholder="Search" />
                 </FormGroup>
                 <Button type="submit">Search</Button>
             </Form>

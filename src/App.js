@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Computers } from "./components/Computers"
-import { Search } from "./components/Search"
+import {Search} from "./components/Search"
 import './App.css';
+import {Grid, Row, Col} from 'react-bootstrap';
 
 class App extends Component {
     state = {
@@ -23,8 +24,17 @@ class App extends Component {
 
         return (
             <div className="App">
+                <Search/>
+                <Grid fluid>
+                    <Row>
+                        <Col md={3}>
+                        </Col>
+                        <Col md={9}>
+                            <Computers data={items}/>
+                        </Col>
+                    </Row>
+                </Grid>
 
-                <Computers data={items}/>
             </div>
         );
     }
