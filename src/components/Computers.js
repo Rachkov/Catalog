@@ -3,79 +3,84 @@ import {Button, Form, FormGroup, FormControl} from 'react-bootstrap';
 import {Computer} from "./Computer";
 
 class Computers extends Component {
-    state = {
-        count: 10,
-        quantity: 0,
-        searchInput: '',
-        search: ''
-    };
-
-    moreClick = (e) => {
-        e.preventDefault();
-        this.setState({count: this.state.count += 10});
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            quantity: props.data.length,
+            searchInput: '',
+            count: 10,
+            renderData: props.data.slice(0, 10),
+            findItems: props.data
+        };
+    }
 
     searchChange = (e) => {
         e.preventDefault();
-        this.setState({searchInput: e.currentTarget.value})
+        this.setState({searchInput: e.target.value})
     };
 
     searchClick = (e) => {
         e.preventDefault();
-        this.setState({search: this.state.searchInput, count: 10})
+        const { findItems, searchInput } = this.state;
+        const filterArray = findItems.filter((item) =>
+            `${item.data.find((n) => n.name === 'Manufacturer').value} ${item.data.find((n) => n.name === 'Model').value}`.toLowerCase().indexOf(searchInput.toLowerCase().trim()) !== -1
+        );
+        this.setState({findItems: filterArray, quantity: filterArray.length, renderData: filterArray.slice(0, 10)})
+        //this.setState({renderData: filterArray, quantity: filterArray.length})
     };
 
-    renderTemp () {
+    moreClick = () => {
+        const { findItems, renderData, count } = this.state;
+        this.setState({renderData: findItems.slice(0, renderData.length + count)});
+    };
+
+    /*manList () {
         const { data } = this.props;
-        const { search } = this.state;
-        let renderData = [];
-
-        const temp = data.map(function (item, index) {
-            const man = item.find((n) => n.name === 'Manufacturer').value;
-            const mod = item.find((n) => n.name === 'Model').value;
-            let str = `${man} ${mod}`;
-            if (str.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
-                return <Computer key={index} data={item}/>
-            }
+        const allManList = data.map((item) => {
+            return item.find((n) => n.name === 'Manufacturer').value;
         });
-        temp.forEach(function (item) {
-            if (item !== undefined){
-                renderData.push(item)
-            }
-        });
+        let uniqueManList = [... new Set(allManList)]
+        console.log(uniqueManList)
+    }*/
 
-        this.state.quantity = renderData.length;
-        return renderData.slice(0, this.state.count)
-    }
-
-    visibleButton () {
-        if (this.state.quantity > 0 && this.state.quantity <= this.state.count) {
-            return <h4>Всего {this.state.quantity} товаров</h4>
-        } else if (this.state.quantity >= this.state.count) {
-            return <Button onClick={this.moreClick}>Показать ещё</Button>
+    visibleButton() {
+        if (this.state.quantity > 0 && this.state.quantity <= this.state.renderData.length) {
+            return <h4>Всего {this.state.quantity} товаров</h4>;
+        } else if (this.state.quantity >= this.state.renderData.length) {
+            return <Button onClick={this.moreClick}>Показать ещё</Button>;
         } else if (this.state.quantity === 0) {
-            return <h4>Товаров не найдено</h4>
+            return <h4>Товаров не найдено</h4>;
         }
     }
 
     render () {
-        const { searchInput } = this.state;
+        const { searchInput, renderData } = this.state;
 
         return (
             <div>
                 <Form inline className="search">
                     <FormGroup>
-                        <FormControl onChange={this.searchChange}
-                                     value={searchInput}
-                                     type="text"
-                                     placeholder="Seeeearch"
+                        <FormControl
+                            onChange={this.searchChange}
+                            value={searchInput}
+                            type="text"
+                            placeholder="Seeeearch"
                         />
                     </FormGroup>
                     <Button onClick={this.searchClick} type="submit">Search</Button>
                 </Form>
-                {this.renderTemp()}
+                {
+                    renderData.map((item) => (
+                        <Computer key={item.id} data={item.data}/>
+                    ))
+                }
                 <div className="showMore">
-                    {this.visibleButton()}
+                    {
+                        /*(this.state.quantity > 0 && this.state.quantity <= this.state.count) ? <h4>Всего {this.state.quantity} товаров</h4> :
+                            (this.state.quantity >= this.state.count) ? <Button onClick={this.moreClick}>Показать ещё</Button> :
+                                <h4>Товаров не найдено</h4>*/
+                        this.visibleButton()
+                    }
                 </div>
             </div>
         )

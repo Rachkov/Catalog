@@ -6,7 +6,7 @@ import {Grid, Row, Col} from 'react-bootstrap';
 class App extends Component {
     state = {
         items: []
-    }
+    };
 
     componentDidMount() {
         fetch('http://localhost:3000/data/notebook.json')
@@ -20,7 +20,6 @@ class App extends Component {
 
     render() {
         const { items } = this.state;
-
         return (
             <div className="App">
                 <Grid fluid>
@@ -28,7 +27,11 @@ class App extends Component {
                         <Col md={3}>
                         </Col>
                         <Col md={9}>
-                            <Computers data={items}/>
+                            {
+                                items.length && (
+                                    <Computers data={items}/>
+                                )
+                            }
                         </Col>
                     </Row>
                 </Grid>
