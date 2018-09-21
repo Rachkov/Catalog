@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Form, FormGroup, FormControl, Button} from 'react-bootstrap';
 
-class Search extends Component {
-    render () {
-        return (
-            <Form inline className="search">
-                <FormGroup>
-                    <FormControl type="text" placeholder="Search" />
-                </FormGroup>
-                <Button type="submit">Search</Button>
-            </Form>
-        )
-    }
-}
-
-export { Search }
+export default ({ searchChange, searchInput, searchClick }) => (
+    <Form inline className="search">
+        <FormGroup>
+            <FormControl
+                type="text"
+                onChange={searchChange}
+                value={searchInput}
+                placeholder="Поиск в каталоге"
+            />
+        </FormGroup>
+        <Button onClick={searchClick} type="submit">Искать</Button>
+    </Form>
+);

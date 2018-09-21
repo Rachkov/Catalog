@@ -35,7 +35,7 @@ class Computer extends Component {
         return (
             <div>
                 <Grid fluid>
-                    <Row>
+                    <Row className="goods">
                         <Col md={3}>
                             <img alt="" src={img}/>
                         </Col>

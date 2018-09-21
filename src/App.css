@@ -1,6 +1,22 @@
 .showMore, .search {
     text-align: center;
+    margin: 10px;
 }
 .form-inline .form-control {
     width: 500px;
+}
+.showMore .btn {
+    padding: 7px 50px 7px 50px;
+    border: none;
+}
+.showMore .btn:hover{
+    box-shadow: 2px 2px 4px gray;
+}
+.search .btn {
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-left: 10px;
+}
+.goods {
+    margin-bottom: 10px;
 }
