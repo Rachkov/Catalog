@@ -22,3 +22,14 @@
 .goods {
     margin-bottom: 10px;
 }
+.filters {
+    background-color: #d6d6d6;
+    border-radius: 5px;
+}
+.filters h4 {
+    padding: 5px 10px;
+    font-weight: 600;
+}
+.man-item {
+    padding-left: 20px;
+}

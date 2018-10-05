@@ -7,7 +7,8 @@ class Filters extends Component {
         const {manList} = this.props;
 
         return (
-            <FormGroup>
+            <FormGroup className="filters">
+                <h4>Производитель</h4>
                 {
                     manList.map((i) => (
                         <Man key={i} man={i}/>

@@ -5,7 +5,7 @@ class Man extends Component {
     render () {
         const {man} = this.props
         return (
-            <Checkbox>{man}</Checkbox>
+            <Checkbox className="man-item">{man}</Checkbox>
         )
     }
 }
