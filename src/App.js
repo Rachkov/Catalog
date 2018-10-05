@@ -4,6 +4,7 @@ import './App.css';
 import {Grid, Row, Col} from 'react-bootstrap';
 import Search from "./components/Search";
 import {ButtonMore} from "./components/ButtonMore";
+import {Filters} from "./components/Filters"
 
 class App extends Component {
     constructor(props) {
@@ -25,7 +26,15 @@ class App extends Component {
             })
             .then(data => {
                 this.setState({items: data, renderData: data.slice(0,10), quantity: data.length, findItems: data})
-            })
+            });
+    }
+
+    manList()  {
+        const allManList = this.state.items.map((item) => {
+            return item.data.find((n) => n.name === 'Manufacturer').value;
+        });
+        let uniqueManList = [...new Set(allManList)];
+        return uniqueManList;
     }
 
     searchChange = (e) => {
@@ -59,6 +68,7 @@ class App extends Component {
                     />
                     <Row>
                         <Col md={3}>
+                            <Filters manList={this.manList()}/>
                         </Col>
                         <Col md={9}>
                             {
