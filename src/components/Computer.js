@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Grid, Row, Col, Button} from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Link} from "react-router-dom";
+import ComputerInfo from "./ComputerInfo";
 
 class Computer extends Component {
     render () {
@@ -33,25 +35,28 @@ class Computer extends Component {
         }
 
         return (
-            <div>
-                <Grid fluid>
-                    <Row className="goods">
-                        <Col md={3}>
-                            <img alt="" src={img}/>
-                        </Col>
-                        <Col md={5}>
-                            <h4>{manufacturer} {model}</h4>
-                            <p>{diagonal}" {scrRes}, {CPU} {modelCPU}, {RAM}ГБ, {typeHD} {sizeHD}ГБ, {graphicsCard}, {os}, {color}</p>
-                        </Col>
-                        <Col md={2}>
-                            <h4>{price}</h4>
-                        </Col>
-                        <Col md={2}>
-                            <Button>В корзину</Button>
-                        </Col>
-                    </Row>
-                </Grid>
-            </div>
+            <Router>
+                <div>
+                    <Grid fluid>
+                        <Row className="goods">
+                            <Col md={3}>
+                                <img alt="" src={img}/>
+                            </Col>
+                            <Col md={5}>
+                                <Link to={`/laptop/${manufacturer}/${model}`}><h4>{manufacturer} {model}</h4></Link>
+                                <p>{diagonal}" {scrRes}, {CPU} {modelCPU}, {RAM}ГБ, {typeHD} {sizeHD}ГБ, {graphicsCard}, {os}, {color}</p>
+                            </Col>
+                            <Col md={2}>
+                                <h4>{price}</h4>
+                            </Col>
+                            <Col md={2}>
+                                <Button>В корзину</Button>
+                            </Col>
+                        </Row>
+                    </Grid>
+                    <Route path={`/laptop/${manufacturer}/${model}`} component={() => <ComputerInfo data={data}/>}/>
+                </div>
+            </Router>
         )
     }
 }

@@ -4,14 +4,14 @@ import './App.css';
 import {Grid, Row, Col} from 'react-bootstrap';
 import Search from "./components/Search";
 import {ButtonMore} from "./components/ButtonMore";
-import {Filters} from "./components/Filters"
+import {Filters} from "./components/Filters";
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             items: [],
-            searchInput: '',
+            searchParams: {},
             findItems: [],
             renderData: [],
             quantity: null,
@@ -29,7 +29,7 @@ class App extends Component {
             });
     }
 
-    manList()  {
+    manList() {
         const allManList = this.state.items.map((item) => {
             return item.data.find((n) => n.name === 'Manufacturer').value;
         });
@@ -37,17 +37,33 @@ class App extends Component {
         return uniqueManList;
     }
 
-    searchChange = (e) => {
-        e.preventDefault();
-        this.setState({searchInput: e.target.value})
+    dateList()  {
+        const allDateList = this.state.items.map((item) => {
+            return item.data.find((n) => n.name === 'Date').value;
+        });
+        let uniqueDateList = [...new Set(allDateList)];
+        return uniqueDateList
+    }
+
+    searchChange = (type, value) => {
+        const { searchParams } = this.state;
+        this.setState({ searchParams: { ...searchParams, [type]: value }});
     };
 
-    searchClick = (e) => {
-        e.preventDefault();
-        const { searchInput } = this.state;
-        const filterArray = this.state.items.filter((item) =>
-            `${item.data.find((n) => n.name === 'Manufacturer').value} ${item.data.find((n) => n.name === 'Model').value}`.toLowerCase().indexOf(searchInput.toLowerCase().trim()) !== -1
-        );
+    searchClick = () => {
+        const { searchParams } = this.state;
+        const filterManArr = searchParams['filter-man'] || [];
+        const filterDateArr = searchParams['filter-date'] || [];
+        const searchString = searchParams.search || '';
+        const filterArray = this.state.items.filter((item) => {
+            const manufacturer = item.data.find((n) => n.name === 'Manufacturer').value;
+            const date = item.data.find((n) => n.name === 'Date').value;
+            const str = `${item.data.find((n) => n.name === 'Manufacturer').value} ${item.data.find((n) => n.name === 'Model').value}`;
+            const resultMan = filterManArr.indexOf(manufacturer) !== -1 || !filterManArr.length;
+            const resultDate = filterDateArr.indexOf(date) !== -1 || !filterDateArr.length;
+            const resultStr = str.toLowerCase().indexOf(searchString.toLowerCase().trim()) !== -1;
+            return resultMan && resultDate && resultStr;
+        });
         this.setState({findItems: filterArray, quantity: filterArray.length, renderData: filterArray.slice(0, 10)})
     };
 
@@ -57,18 +73,22 @@ class App extends Component {
     };
 
     render() {
-        const { items, searchInput, renderData, quantity } = this.state;
+        const { items, renderData, quantity } = this.state;
         return (
             <div className="App">
                 <Grid fluid>
                     <Search
                         searchClick={this.searchClick}
                         searchChange={this.searchChange}
-                        searchInput={searchInput}
                     />
                     <Row>
                         <Col md={3}>
-                            <Filters manList={this.manList()}/>
+                            <Filters
+                                manList={this.manList()}
+                                dateList={this.dateList()}
+                                searchClick={this.searchClick}
+                                searchChange={this.searchChange}
+                            />
                         </Col>
                         <Col md={9}>
                             {
@@ -84,7 +104,6 @@ class App extends Component {
                         moreClick={this.moreClick}
                     />
                 </Grid>
-
             </div>
         );
     }

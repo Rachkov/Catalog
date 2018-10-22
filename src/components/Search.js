@@ -1,16 +1,24 @@
-import React from 'react';
-import {Form, FormGroup, FormControl, Button} from 'react-bootstrap';
+import React, {Component} from 'react';
+import {Input} from 'antd';
 
-export default ({ searchChange, searchInput, searchClick }) => (
-    <Form inline className="search">
-        <FormGroup>
-            <FormControl
-                type="text"
-                onChange={searchChange}
-                value={searchInput}
-                placeholder="Поиск в каталоге"
-            />
-        </FormGroup>
-        <Button onClick={searchClick} type="submit">Искать</Button>
-    </Form>
-);
+class Search extends Component {
+
+    render() {
+        const {searchChange, searchClick} = this.props;
+        const Search = Input.Search;
+
+        return(
+            <div className="search">
+                <Search
+                    placeholder="input search text"
+                    onChange={e => searchChange('search', e.target.value)}
+                    onSearch={searchClick}
+                    enterButton="Искать"
+                    style={{ width: 500 }}
+                />
+            </div>
+        )
+    }
+}
+
+export default Search;

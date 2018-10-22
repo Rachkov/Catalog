@@ -1,20 +1,32 @@
-import React, { Component } from 'react'
-import {FormGroup} from 'react-bootstrap'
-import {Man} from "./Man"
+import React, { Component } from 'react';
+import { Checkbox, Button, Select } from "antd";
 
 class Filters extends Component {
+
     render() {
-        const {manList} = this.props;
+        const {manList, dateList, searchClick, searchChange} = this.props;
+        const date = [];
+        dateList.map((i) => date.push(<Select.Option key={i}>{i}</Select.Option>));
 
         return (
-            <FormGroup className="filters">
+            <div className="filters">
                 <h4>Производитель</h4>
                 {
-                    manList.map((i) => (
-                        <Man key={i} man={i}/>
-                    ))
+                    <Checkbox.Group options={manList} onChange={(checked) => searchChange('filter-man', checked)}/>
                 }
-            </FormGroup>
+                <h4>Дата выхода на рынок</h4>
+                {
+                    <Select
+                        mode="multiple"
+                        style={{ width: '100%' }}
+                        placeholder="Please select"
+                        onChange={(checked) => searchChange('filter-date', checked)}
+                    >
+                        {date}
+                    </Select>
+                }
+                <Button onClick={searchClick} type="primary" style={{ width: '100%' }}>Показать</Button>
+            </div>
         )
     }
 }
