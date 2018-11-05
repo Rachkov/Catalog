@@ -10,7 +10,7 @@ class Computers extends Component {
             <div>
                 {
                     renderData.map((item) => (
-                        <Computer key={item.id} data={item.data}/>
+                        <Computer key={item.id} data={item}/>
                     ))
                 }
             </div>

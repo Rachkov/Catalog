@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 class Computer extends Component {
     render () {
-        const { data } = this.props;
+        const { data: {id, data} } = this.props;
 
         const manufacturer = data.find((n) => n.name === 'Manufacturer').value;
         const model = data.find((n) => n.name === 'Model').value;
@@ -42,8 +42,7 @@ class Computer extends Component {
                         </Col>
                         <Col md={5}>
                             <Link to={{
-                                pathname: `/laptops/${manufacturer}/${model}`,
-                                data: data
+                                pathname: `/laptops/${id}`
                             }}>
                                 <h4>{manufacturer} {model}</h4>
                             </Link>
